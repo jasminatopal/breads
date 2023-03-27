@@ -5,10 +5,27 @@ const { Schema } = mongoose
 
 // schema
 const breadSchema = new Schema({
-    name: { type: String, required: true },
-    hasGluten: Boolean,
-    image: { type: String, default: 'http://placehold.it/500x500.png' }
+  name: { type: String, required: true },
+  hasGluten: Boolean,
+  image: { type: String, default: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Korb_mit_Br%C3%B6tchen.JPG/1200px-Korb_mit_Br%C3%B6tchen.JPG"  },
+  baker: {
+    type: Schema.Types.ObjectID,
+    ref: 'Baker'
+  }
 })
+
+// helper methods 
+breadSchema.methods.getBakedBy = function(){
+  let baker_name = "somebody"
+  let baker_start = new Date().getFullYear()
+  if (this.baker) {
+      baker_name = this.baker.name
+      baker_start = this.baker.startDate
+  }
+  
+  return `${this.name} baked with love by ${baker_name}, who has been with us since ${this.baker.startDate.getFullYear()}`
+}
+
 
 // model and export 
 const Bread = mongoose.model('Bread', breadSchema)

@@ -21,6 +21,10 @@ app.engine('jsx', require('express-react-views').createEngine())
 const breadsController = require('./controllers/breads_controller.js')
 app.use('/breads', breadsController)
 
+//Bakers
+const bakersController = require('./controllers/bakers_controllers.js')
+app.use('/bakers', bakersController)
+
 
 // ROUTES
 app.get('/', (req, res) => {
